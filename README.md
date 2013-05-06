@@ -1,4 +1,4 @@
-![Alt text](http://img593.imageshack.us/img593/6505/musigma.png "A ranking algorithm implementation for Ruby on Rails applications")
+![Alt text](http://img153.imageshack.us/img153/3909/sigmav.png "A ranking algorithm implementation for Ruby on Rails applications")
 
 # Mu-Sigma (current version - 0.0.0)
 A **ranking algorithm implementation** gem to Ruby on Rails applications
