@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mu-sigma (0.0.0)
+    sigma (0.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -125,9 +125,9 @@ PLATFORMS
 DEPENDENCIES
   coveralls
   factory_girl_rails (= 4.2.1)
-  mu-sigma!
   rails (= 3.2.13)
   rake (= 10.0.4)
   rspec (= 2.13.0)
   rspec-rails (= 2.13.0)
+  sigma!
   sqlite3
