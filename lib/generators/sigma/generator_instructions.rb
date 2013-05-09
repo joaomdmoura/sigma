@@ -8,7 +8,7 @@ module GeneratorInstructions
 Sigma successfully installed.
 
 For usage and more infomation go to the documentation:
-http://joaomdmoura.github.com/Sigma/
+http://joaomdmoura.github.com/sigma/
 
 By João Moura (a.k.a joaomdmoura)
 
