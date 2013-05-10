@@ -1,0 +1,3 @@
+module ClassUpdater
+  #TODO
+end
