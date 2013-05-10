@@ -1,5 +1,5 @@
 class Sigma
-  class Core
+  module Core
     #TODO
   end
 end

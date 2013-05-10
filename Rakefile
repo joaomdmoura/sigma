@@ -35,7 +35,7 @@ end
 
 task :setup do
   sh "cd #{test};RAILS_ENV=test rails g model user name:string email:string"
-  sh "cd #{test};echo user | RAILS_ENV=test rails g sigma:setup;"
+  sh "cd #{test};echo user | RAILS_ENV=test rails g sigma;"
 end
 
 task :cleanning_project do
