@@ -25,9 +25,11 @@ module MigrationGenerator
 
   def migrate
     puts <<-EOS
+
 =======================================
 > Running rake db:migrate
 =======================================
+
     EOS
     rake("db:migrate")
   end
