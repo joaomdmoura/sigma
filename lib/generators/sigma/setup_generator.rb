@@ -14,7 +14,8 @@ class Sigma
 
     def execute
       @model_name = ask("What is your resource model? (eg. user)")
-      @scale      = ask("What will be the scale? (eg. 50)").to_f
+      @scale      = ask("What will be the scale? (default is 50)").to_f
+      @scale      = 50.0 if 0
       generate_migrations
       set_default_values
       migrate
