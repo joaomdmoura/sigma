@@ -8,6 +8,18 @@ module MigrationGenerator
   end
 
   def set_default_values
-    # inject_into_file "db/migrations/add_skill_to_#{@model_name.pluralize}.rb", "config.gem :thor", :after => "Rails::Initializer.run do |config|\n"
+    migrations = Dir.entries("db/migrate")
+    migrations.each do |m|
+      name = m.split(/^[0-9]+_/)[1]
+      if name == "add_skill_to_#{@model_name.pluralize}.rb"
+        inject_into_file  "db/migrate/#{m}",
+                          ", :default => #{@scale/2}",
+                          :after => ":float"
+      elsif name == "add_doubt_to_#{@model_name.pluralize}.rb"
+        inject_into_file  "db/migrate/#{m}",
+                          ", :default => #{@scale/6}",
+                          :after => ":float"
+      end
+    end
   end
 end
