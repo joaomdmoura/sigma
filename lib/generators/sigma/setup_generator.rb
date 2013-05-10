@@ -3,7 +3,7 @@ require "generators/sigma/generator_instructions"
 
 class Sigma
   class SetupGenerator < Rails::Generators::Base
-    include Migrationenerator
+    include MigrationGenerator
     include GeneratorInstructions
 
     source_root File.expand_path("../../templates", __FILE__)
@@ -12,7 +12,7 @@ class Sigma
 
     def execute
       @model_name = ask("What is your resource model? (eg. user)")
-      @scale      = ask("What is the scale that you want? (eg. 50)")
+      @scale      = ask("What will be the scale? (eg. 50)").to_i
       generate_migrations
       set_default_values
       instructions
