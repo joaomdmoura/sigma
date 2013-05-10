@@ -34,7 +34,8 @@ task :support_files do
 end
 
 task :setup do
-  # TODO
+  sh "cd #{test};RAILS_ENV=test rails g model user name:string email:string"
+  sh "cd #{test};echo user | RAILS_ENV=test rails g sigma:setup;"
 end
 
 task :cleanning_project do
