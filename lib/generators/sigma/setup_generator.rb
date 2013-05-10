@@ -17,6 +17,7 @@ class Sigma
       @scale      = ask("What will be the scale? (eg. 50)").to_f
       generate_migrations
       set_default_values
+      migrate
       instructions
     end
   
