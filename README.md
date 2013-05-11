@@ -1,5 +1,6 @@
 ![Alt text](http://img153.imageshack.us/img153/3909/sigmav.png "A ranking algorithm implementation for Ruby on Rails applications")
 
+[![Build Status](https://travis-ci.org/joaomdmoura/sigma.png?branch=master)](https://travis-ci.org/joaomdmoura/sigma)
 [![Code Climate](https://codeclimate.com/github/joaomdmoura/sigma.png)](https://codeclimate.com/github/joaomdmoura/sigma)
 [![Dependency Status](https://gemnasium.com/joaomdmoura/sigma.png)](https://gemnasium.com/joaomdmoura/sigma)
 
