@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.org/joaomdmoura/sigma.png?branch=master)](https://travis-ci.org/joaomdmoura/sigma)
 [![Code Climate](https://codeclimate.com/github/joaomdmoura/sigma.png)](https://codeclimate.com/github/joaomdmoura/sigma)
 [![Dependency Status](https://gemnasium.com/joaomdmoura/sigma.png)](https://gemnasium.com/joaomdmoura/sigma)
-
 # Sigma (current version - 0.0.0)
 A **ranking algorithm implementation** gem to Ruby on Rails applications
 
