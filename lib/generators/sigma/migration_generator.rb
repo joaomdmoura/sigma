@@ -19,6 +19,10 @@ module MigrationGenerator
         inject_into_file  "db/migrate/#{m}",
                           ", :default => #{@scale/6}",
                           :after => ":float"
+      elsif name == "add_wins_to_#{@model_name.pluralize}.rb" || name == "add_losses_to_#{@model_name.pluralize}.rb" || name == "add_draws_to_#{@model_name.pluralize}.rb"
+        inject_into_file  "db/migrate/#{m}",
+                          ", :default => 0",
+                          :after => ":integer"
       end
     end
   end
