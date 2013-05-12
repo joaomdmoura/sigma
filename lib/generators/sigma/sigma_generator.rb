@@ -1,11 +1,11 @@
-require "generators/sigma/class_updater"
+require "generators/sigma/model_updater"
 require "generators/sigma/migration_generator"
 require "generators/sigma/generator_instructions"
 
 class SigmaGenerator < Rails::Generators::Base
   include MigrationGenerator
   include GeneratorInstructions
-  include ClassUpdater
+  include ModelUpdater
 
   source_root File.expand_path("../../templates", __FILE__)
   
@@ -17,6 +17,7 @@ class SigmaGenerator < Rails::Generators::Base
     @scale      = 50.0 if 0
     generate_migrations
     set_default_values
+    add_methods
     migrate
     instructions
   end
