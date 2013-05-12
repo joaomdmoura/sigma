@@ -4,7 +4,7 @@ module ModelUpdater
     inject_into_file  "app/models/#{@model_name}.rb",
                       ":skill, :doubt, ",
                       :after => "attr_accessible "
-		inject_into_file  "app/models/#{@model_name}.rb",
+    inject_into_file  "app/models/#{@model_name}.rb",
                       "\n#{resource}\n",
                       :after => /attr_accessible [a-z:, ]+$/
   end
