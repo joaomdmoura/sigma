@@ -5,6 +5,7 @@ module MigrationGenerator
     generate("migration", "add_wins_to_#{@model_name.pluralize} wins:integer")
     generate("migration", "add_losses_to_#{@model_name.pluralize} losses:integer")
     generate("migration", "add_draws_to_#{@model_name.pluralize} draws:integer")
+    generate("migration", "add_expectations_to_#{@model_name.pluralize} expectations:string")
   end
 
   def set_default_values
@@ -19,6 +20,10 @@ module MigrationGenerator
         inject_into_file  "db/migrate/#{m}",
                           ", :default => #{@scale/6}",
                           :after => ":float"
+      elsif name == "add_expectations_to_#{@model_name.pluralize}.rb"
+        inject_into_file  "db/migrate/#{m}",
+                          ", :default => {'win_expectation'=>[0,0,0],'lost_expectation'=>[0,0,0],'draw_expectation'=>[0,0,0]}",
+                          :after => ":string"
       elsif name == "add_wins_to_#{@model_name.pluralize}.rb" || name == "add_losses_to_#{@model_name.pluralize}.rb" || name == "add_draws_to_#{@model_name.pluralize}.rb"
         inject_into_file  "db/migrate/#{m}",
                           ", :default => 0",
