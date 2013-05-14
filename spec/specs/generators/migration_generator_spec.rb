@@ -24,5 +24,12 @@ describe "Migration Generator" do
     it "Should have 0 draws" do
       user.draws.should == 0
     end
+
+    it "Should have a serialized expectations x result field" do
+      user.expectations.should_not be_nil
+      user.expectations['win_expectation'].should_not be_nil
+      user.expectations['lost_expectation'].should_not be_nil
+      user.expectations['draw_expectation'].should_not be_nil
+    end
   end
 end
