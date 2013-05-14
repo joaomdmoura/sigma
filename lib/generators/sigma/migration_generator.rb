@@ -10,30 +10,15 @@ module MigrationGenerator
 
   def set_default_values
     migrations = Dir.entries("db/migrate")
+    expectations = {  'win_expectation'=> [ 'wins' => 0,'losses' => 0,'draws' => 0],'lost_expectation'=> [ 'wins' => 0,'losses' => 0,'draws' => 0],'draw_expectation'=> [ 'wins' => 0,'losses' => 0,'draws' => 0]}    
     migrations.each do |m|
       name = m.split(/^[0-9]+_/)[1]
       if name == "add_skill_to_#{@model_name.pluralize}.rb"
         update_migration(m, @scale/2, ":float")
-
       elsif name == "add_doubt_to_#{@model_name.pluralize}.rb"
         update_migration(m, @scale/6, ":float")
-
       elsif name == "add_expectations_to_#{@model_name.pluralize}.rb"
-        expectations = {  'win_expectation'=> [ 'wins' => 0,
-                                                'losses' => 0,
-                                                'draws' => 0
-                                              ],
-                          'lost_expectation'=> [ 'wins' => 0,
-                                                'losses' => 0,
-                                                'draws' => 0
-                                              ],
-                          'draw_expectation'=> [ 'wins' => 0,
-                                                'losses' => 0,
-                                                'draws' => 0
-                                              ]
-                       }
         update_migration(m, expectations, ":string")
-
       elsif name == "add_wins_to_#{@model_name.pluralize}.rb" || name == "add_losses_to_#{@model_name.pluralize}.rb" || name == "add_draws_to_#{@model_name.pluralize}.rb"
         update_migration(m, 0, ":integer")
       end
