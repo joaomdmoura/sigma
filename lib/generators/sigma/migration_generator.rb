@@ -10,7 +10,7 @@ module MigrationGenerator
 
   def set_default_values
     migrations = Dir.entries("db/migrate")
-    expectations = {  'win_expectation'=> [ 'wins' => 0,'losses' => 0,'draws' => 0],'lost_expectation'=> [ 'wins' => 0,'losses' => 0,'draws' => 0],'draw_expectation'=> [ 'wins' => 0,'losses' => 0,'draws' => 0]}    
+    expectations = { 'win_expectation'=> { 'wins' => 0,'losses' => 0,'draws' => 0 },'lost_expectation'=> { 'wins' => 0,'losses' => 0,'draws' => 0 },'draw_expectation'=> { 'wins' => 0,'losses' => 0,'draws' => 0 } }    
     migrations.each do |m|
       name = m.split(/^[0-9]+_/)[1]
       if name == "add_skill_to_#{@model_name.pluralize}.rb"
