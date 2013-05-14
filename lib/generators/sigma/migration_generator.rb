@@ -13,21 +13,29 @@ module MigrationGenerator
     migrations.each do |m|
       name = m.split(/^[0-9]+_/)[1]
       if name == "add_skill_to_#{@model_name.pluralize}.rb"
-        inject_into_file  "db/migrate/#{m}",
-                          ", :default => #{@scale/2}",
-                          :after => ":float"
+        update_migration(m, @scale/2, ":float")
+
       elsif name == "add_doubt_to_#{@model_name.pluralize}.rb"
-        inject_into_file  "db/migrate/#{m}",
-                          ", :default => #{@scale/6}",
-                          :after => ":float"
+        update_migration(m, @scale/6, ":float")
+
       elsif name == "add_expectations_to_#{@model_name.pluralize}.rb"
-        inject_into_file  "db/migrate/#{m}",
-                          ", :default => {'win_expectation'=>[0,0,0],'lost_expectation'=>[0,0,0],'draw_expectation'=>[0,0,0]}",
-                          :after => ":string"
+        expectations = {  'win_expectation'=> [ 'wins' => 0,
+                                                'losses' => 0,
+                                                'draws' => 0
+                                              ],
+                          'lost_expectation'=> [ 'wins' => 0,
+                                                'losses' => 0,
+                                                'draws' => 0
+                                              ],
+                          'draw_expectation'=> [ 'wins' => 0,
+                                                'losses' => 0,
+                                                'draws' => 0
+                                              ]
+                       }
+        update_migration(m, expectations, ":string")
+
       elsif name == "add_wins_to_#{@model_name.pluralize}.rb" || name == "add_losses_to_#{@model_name.pluralize}.rb" || name == "add_draws_to_#{@model_name.pluralize}.rb"
-        inject_into_file  "db/migrate/#{m}",
-                          ", :default => 0",
-                          :after => ":integer"
+        update_migration(m, 0, ":integer")
       end
     end
   end
@@ -41,5 +49,11 @@ module MigrationGenerator
 
     EOS
     rake("db:migrate")
+  end
+
+  private
+
+  def update_migration (file, default, after)
+    inject_into_file  "db/migrate/#{file}", ", :default => #{default}", :after => "#{after}"
   end
 end
