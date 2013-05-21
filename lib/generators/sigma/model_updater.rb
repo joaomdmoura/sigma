@@ -8,4 +8,8 @@ module ModelUpdater
                       "\n#{resource}\n",
                       :after => /attr_accessible [a-z:, ]+$/
   end
+
+  def creating_templates
+    template "sigma.rb", "config/initializers/sigma.rb"
+  end
 end
