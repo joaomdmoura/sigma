@@ -82,3 +82,7 @@
 
     (probability == 0.0) ? 0.5 : probability
   end
+
+  def self.ranking
+    #TODO
+  end
