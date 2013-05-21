@@ -17,6 +17,7 @@ class SigmaGenerator < Rails::Generators::Base
     @scale      = 50.0 if 0
     generate_migrations
     set_default_values
+    creating_templates
     add_methods
     migrate
     instructions
