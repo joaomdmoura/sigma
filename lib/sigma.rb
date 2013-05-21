@@ -1,3 +1,7 @@
 class Sigma
-  require "sigma/core"
+	module Ranking
+    def generate
+    	#TODO
+    end
+  end
 end
