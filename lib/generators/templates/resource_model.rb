@@ -9,7 +9,7 @@
   end
 
   def position
-    self.class.ranking.index(self)+1
+    self.class.ranking.index(self) + 1
   end
 
   def matches
