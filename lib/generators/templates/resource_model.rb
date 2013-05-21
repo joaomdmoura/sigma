@@ -32,24 +32,25 @@
     self.save
   end
 
-  def define_match_data(match_difficult)
-    @resource_probability = probability(expectation)
-    @match_difficult      = match_difficult.abs
-    @expectation          = (match_difficult == 0) ? 0 : match_difficult > 0
-    @alpha                = (match_difficult / 50.0)**2.0 #SCALE
+  def define_match_data(difficult)
+    @expectation          = (difficult == 0) ? 0 : difficult > 0
+    @match_difficult      = difficult.abs
+    @resource_probability = probability(@expectation)
+    @alpha                = (difficult / Sigma::SCALE)**2.0
   end
 
-  def update_sigma(expectation)
+  def update_sigma(exp)
+    # Missing draw support
     if @expectation
-      expectations                                       = self.expectations['win_expectation'][expectation]
-      salpha                                             = ((@resource_probability - 1).abs) * @alpha
-      self.doubt                                         = self.doubt - (self.doubt * salpha)
-      self.expectations['win_expectation'][expectation]  = expectations + 1
+      expectations                              = self.expectations['win_expectation'][exp]
+      salpha                                    = ((@resource_probability - 1).abs) * @alpha
+      self.doubt                                = self.doubt - (self.doubt * salpha)
+      self.expectations['win_expectation'][exp] = expectations + 1
     else
-      expectations                                       = self.expectations['lost_expectation'][expectation]
-      salpha                                             = @resource_probability * alpha
-      self.doubt                                         = self.doubt + (self.doubt * salpha)
-      self.expectations['lost_expectation'][expectation] = expectations + 1
+      expectations                               = self.expectations['lost_expectation'][exp]
+      salpha                                     = @resource_probability * @alpha
+      self.doubt                                 = self.doubt + (self.doubt * salpha)
+      self.expectations['lost_expectation'][exp] = expectations + 1
     end
   end
 
@@ -68,9 +69,12 @@
                    }
 
     expectations.each do |k, v|
-      v[:we] = w*(self.expectations['win_expectation'][k]*100.0/((self[k] == 0) ? 1 : self[k]))
-      v[:le] = l*(self.expectations['lost_expectation'][k]*100.0/((self[k] == 0) ? 1 : self[k]))
-      v[:de] = d*(self.expectations['draw_expectation'][k]*100.0/((self[k] == 0) ? 1 : self[k]))
+      mult = (k == 'wins') ? w : nil
+      mult ||= (k == 'losses') ? l : d
+
+      v[:we] = mult*(self.expectations['win_expectation'][k]*100.0/((self[k] == 0) ? 1 : self[k]))
+      v[:le] = mult*(self.expectations['lost_expectation'][k]*100.0/((self[k] == 0) ? 1 : self[k]))
+      v[:de] = mult*(self.expectations['draw_expectation'][k]*100.0/((self[k] == 0) ? 1 : self[k]))
     end
     
     all_probabilities = expectations[result][:we]+expectations[result][:le]+expectations[result][:de]
