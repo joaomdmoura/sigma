@@ -6,7 +6,7 @@ describe "Model Updater" do
   let(:user_3) { FactoryGirl.create(:user, :skill => 50, :doubt => 4) }
   
   context "Check if ranking scope was correctly added" do
-    it "Should return teh ranking with the correct rating order" do
+    it "Should return the ranking with the correct rating order" do
       User.ranking.should == [user_3, user_2, user_1]
     end    
   end
