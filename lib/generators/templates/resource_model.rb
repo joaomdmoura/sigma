@@ -19,7 +19,7 @@
   def won(match_difficult)
     define_match_data(match_difficult)
     self.skill = self.skill + (self.skill * @alpha)
-    update_sigma('wins')
+    update_sigma(true)
     self.increment :wins
     self.save
   end
@@ -27,36 +27,38 @@
   def lost(match_difficult)
     define_match_data(match_difficult)
     self.skill = self.skill - (self.skill * @alpha)
-    update_sigma('losses')
+    update_sigma(false)
     self.increment :losses
     self.save
   end
 
   def define_match_data(difficult)
     @expectation          = (difficult == 0) ? 0 : difficult > 0
-    @match_difficult      = difficult.abs
     @resource_probability = probability(@expectation)
     @alpha                = (difficult / Sigma::SCALE)**2.0
   end
 
   def update_sigma(exp)
-    # Missing draw support
-    if @expectation
-      expectations                              = self.expectations['win_expectation'][exp]
-      salpha                                    = ((@resource_probability - 1).abs) * @alpha
-      self.doubt                                = self.doubt - (self.doubt * salpha)
-      self.expectations['win_expectation'][exp] = expectations + 1
+    exp_result                         = (@expectation == true) ? 'win_expectation' : nil
+    exp_result                         ||= (@expectation == false) ? 'lost_expectation' : 'draw_expectation'
+    result                             = (exp == true) ? 'wins' : nil
+    result                             ||= (exp == false) ? 'losses' : 'draws'
+
+    expectations                       = self.expectations[exp_result][result]
+    self.expectations[exp_result][exp] = expectations + 1
+
+    if @expectation == exp
+      salpha     = (1 - @resource_probability) * @alpha
+      self.doubt = self.doubt - (self.doubt * salpha)
     else
-      expectations                               = self.expectations['lost_expectation'][exp]
-      salpha                                     = @resource_probability * @alpha
-      self.doubt                                 = self.doubt + (self.doubt * salpha)
-      self.expectations['lost_expectation'][exp] = expectations + 1
+      salpha     = @resource_probability * @alpha
+      self.doubt = self.doubt + (self.doubt * salpha)
     end
   end
 
   def probability(expectation)
-    result = (expectation == true) ? 'wins' : nil
-    result ||= (expectation == false) ? 'losses' : 'draws'
+    result = (@expectation == true) ? 'wins' : nil
+    result ||= (@expectation == false) ? 'losses' : 'draws'
 
     w = self.wins   * 100.0 / ((matches == 0) ? 1 : matches)
     l = self.losses * 100.0 / ((matches == 0) ? 1 : matches)
@@ -79,8 +81,6 @@
     
     all_probabilities = expectations[result][:we]+expectations[result][:le]+expectations[result][:de]
     probability       = expectations[result][:we] / ((all_probabilities == 0) ? 1 : all_probabilities)
-
-    (probability == 0.0) ? 0.5 : probability
   end
 
   def self.ranking
