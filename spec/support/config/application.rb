@@ -7,6 +7,7 @@ require "active_resource/railtie"
 require "sprockets/railtie"
 
 Bundler.require
+require "sigma"
 
 module Dummy
   class Application < Rails::Application

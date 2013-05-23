@@ -1,0 +1,2 @@
+class Sigma
+end
