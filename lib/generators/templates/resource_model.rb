@@ -82,7 +82,3 @@
     all_probabilities = expectations[result][:we]+expectations[result][:le]+expectations[result][:de]
     probability       = expectations[result][:we] / ((all_probabilities == 0) ? 1 : all_probabilities)
   end
-
-  def self.ranking
-    #TODO
-  end
