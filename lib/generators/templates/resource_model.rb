@@ -18,8 +18,7 @@
 
   def won(match_difficult)
     define_match_data(match_difficult)
-    skill_won  = self.skill * @alpha
-    skill_won  = skill_won/Sigma::SCALE/(Sigma::SCALE-match_difficult) if @expectation
+    skill_won  = @skill_update/Sigma::SCALE/(Sigma::SCALE-match_difficult) if @expectation
     self.skill = self.skill + skill_won
 
     update_sigma(true)
@@ -29,8 +28,7 @@
 
   def lost(match_difficult)
     define_match_data(match_difficult)
-    skill_lost = self.skill * @alpha
-    skill_lost = skill_lost/Sigma::SCALE/(Sigma::SCALE-match_difficult.abs) if !@expectation
+    skill_lost = @skill_update/Sigma::SCALE/(Sigma::SCALE-match_difficult.abs) if !@expectation
     self.skill = self.skill - skill_lost
 
     update_sigma(false)
@@ -42,6 +40,7 @@
     @expectation          = (difficult == 0) ? 0 : difficult > 0
     @resource_probability = probability(@expectation)
     @alpha                = difficult.abs / Sigma::SCALE
+    @skill_update         = self.skill * @alpha
   end
 
   def update_sigma(exp)
@@ -63,8 +62,11 @@
   end
 
   def probability(expectation)
-    result = (@expectation == true) ? 'wins' : nil
-    result ||= (@expectation == false) ? 'losses' : 'draws'
+    result       = (@expectation == true) ? 'wins' : nil
+    result       ||= (@expectation == false) ? 'losses' : 'draws'
+
+    exp_result   = (@expectation == true) ? :we : nil
+    exp_result   ||= (@expectation == false) ? :le : :de
 
     w = self.wins   * 100.0 / ((matches == 0) ? 1 : matches)
     l = self.losses * 100.0 / ((matches == 0) ? 1 : matches)
@@ -86,5 +88,5 @@
     end
     
     all_probabilities = expectations[result][:we]+expectations[result][:le]+expectations[result][:de]
-    probability       = expectations[result][:we] / ((all_probabilities == 0) ? 1 : all_probabilities)
+    probability       = expectations[result][exp_result] / ((all_probabilities == 0) ? 1 : all_probabilities)
   end
