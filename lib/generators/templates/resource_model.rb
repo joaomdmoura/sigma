@@ -103,4 +103,6 @@
     
     all_probabilities = expectations[result][:we]+expectations[result][:le]+expectations[result][:de]
     probability       = expectations[result][exp_result] / ((all_probabilities == 0) ? 1 : all_probabilities)
+
+    (probability == 0) ? 0.25 : probability
   end
