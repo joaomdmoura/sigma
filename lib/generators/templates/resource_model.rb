@@ -18,7 +18,14 @@
 
   def won(match_difficult)
     define_match_data(match_difficult)
-    skill_won  = @skill_update/Sigma::SCALE/(Sigma::SCALE-match_difficult) if @expectation
+
+    if @expectation == true
+      skill_update = self.skill / @alpha
+      skill_won    = skill_update/Sigma::SCALE/(Sigma::SCALE+match_difficult)
+    else
+      skill_won = self.skill * @alpha
+    end
+
     self.skill = self.skill + skill_won
 
     update_sigma(true)
@@ -28,7 +35,14 @@
 
   def lost(match_difficult)
     define_match_data(match_difficult)
-    skill_lost = @skill_update/Sigma::SCALE/(Sigma::SCALE-match_difficult.abs) if !@expectation
+
+    if !@expectation
+      skill_update = self.skill / @alpha
+      skill_lost   = skill_update/Sigma::SCALE/(Sigma::SCALE+match_difficult.abs)
+    else
+      skill_lost = self.skill * @alpha
+    end
+
     self.skill = self.skill - skill_lost
 
     update_sigma(false)
@@ -39,8 +53,8 @@
   def define_match_data(difficult)
     @expectation          = (difficult == 0) ? 0 : difficult > 0
     @resource_probability = probability(@expectation)
-    @alpha                = difficult.abs / Sigma::SCALE
-    @skill_update         = self.skill * @alpha
+    difficult             = (difficult == 0) ? 2.5*Sigma::SCALE/100 : difficult.abs
+    @alpha                = difficult / Sigma::SCALE
   end
 
   def update_sigma(exp)
@@ -54,10 +68,10 @@
 
     if @expectation == exp
       salpha     = (1 - @resource_probability) * @alpha
-      self.doubt = self.doubt - (self.doubt * salpha)
+      self.doubt = self.doubt - self.doubt * salpha
     else
       salpha     = @resource_probability * @alpha
-      self.doubt = self.doubt + (self.doubt * salpha)
+      self.doubt = self.doubt + self.doubt * salpha
     end
   end
 
