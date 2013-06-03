@@ -4,10 +4,11 @@
 [![Code Climate](https://codeclimate.com/github/joaomdmoura/sigma.png)](https://codeclimate.com/github/joaomdmoura/sigma)
 [![Dependency Status](https://gemnasium.com/joaomdmoura/sigma.png)](https://gemnasium.com/joaomdmoura/sigma)
 # Sigma (current version - 0.0.0)
-A **ranking algorithm implementation** gem to Ruby on Rails applications
+A **ranking algorithm implementation** to Ruby on Rails applications that use Active Record.
 
 Description
 ------------
+
 
 License
 ------------
