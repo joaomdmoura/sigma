@@ -8,7 +8,7 @@ A **ranking algorithm implementation** to Ruby on Rails applications that use Ac
 
 Description
 ------------
-
+Sigma is an open source implementation of true skill algorithm's concept.
 
 License
 ------------
