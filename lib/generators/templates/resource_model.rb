@@ -60,12 +60,12 @@
   end
 
   def update_sigma(exp)
-    exp_result                         = (@expectation == true) ? 'win_expectation' : nil
-    exp_result                         ||= (@expectation == false) ? 'lost_expectation' : 'draw_expectation'
-    result                             = (exp == true) ? 'wins' : nil
-    result                             ||= (exp == false) ? 'losses' : 'draws'
+    exp_result    = (@expectation == true) ? 'win_expectation' : nil
+    exp_result    ||= (@expectation == false) ? 'lost_expectation' : 'draw_expectation'
+    result        = (exp == true) ? 'wins' : nil
+    result        ||= (exp == false) ? 'losses' : 'draws'
+    expectations  = self.expectations[exp_result][result]
 
-    expectations                       = self.expectations[exp_result][result]
     self.expectations[exp_result][result] = expectations + 1
     if @expectation == exp
       salpha     = (1 - @resource_probability) * @alpha
