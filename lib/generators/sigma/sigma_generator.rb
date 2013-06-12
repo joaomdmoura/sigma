@@ -3,9 +3,7 @@ require "generators/sigma/migration_generator"
 require "generators/sigma/generator_instructions"
 
 class SigmaGenerator < Rails::Generators::Base
-  include MigrationGenerator
-  include GeneratorInstructions
-  include ModelUpdater
+  include MigrationGenerator, GeneratorInstructions, ModelUpdater
 
   source_root File.expand_path("../../templates", __FILE__)
   
