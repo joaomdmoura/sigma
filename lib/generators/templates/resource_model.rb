@@ -20,9 +20,9 @@
     define_match_data(match_difficult)
 
     if @expectation == true
-      skill_won = self.skill/@alpha.abs/Sigma::SCALE/(Sigma::SCALE+@difficult/@alpha.abs)
+      skill_won = self.skill/@alpha/Sigma::SCALE/(Sigma::SCALE+@difficult/@alpha)
     else
-      skill_won = self.skill * @alpha.abs
+      skill_won = self.skill * @alpha
     end
 
     self.skill = self.skill + skill_won
@@ -35,9 +35,9 @@
     define_match_data(match_difficult)
 
     if !@expectation
-      skill_lost = self.skill/@alpha.abs/Sigma::SCALE/(Sigma::SCALE+@difficult.abs/@alpha.abs)
+      skill_lost = self.skill/@alpha/Sigma::SCALE/(Sigma::SCALE+@difficult.abs/@alpha)
     else
-      skill_lost = self.skill * @alpha.abs
+      skill_lost = self.skill * @alpha
     end
     self.skill = self.skill - skill_lost
     update_sigma(false)
@@ -56,7 +56,7 @@
     else
       @difficult = difficult.abs
     end
-    @alpha = @difficult / Sigma::SCALE
+    @alpha = (@difficult / Sigma::SCALE).abs
   end
 
   def update_sigma(exp)
