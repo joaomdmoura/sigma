@@ -35,5 +35,4 @@ describe "model updater" do
       expect(User.ranking[0]).to eq user_5
     end
   end
-  
 end
