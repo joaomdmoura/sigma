@@ -1,4 +1,4 @@
-  after_initialize "self.expectations = {
+  before_create "self.expectations = {
     'win_expectation'=>{'wins'=>0, 'losses'=>0, 'draws'=>0},
     'lost_expectation'=>{'wins'=>0, 'losses'=>0, 'draws'=>0},
     'draw_expectation'=>{'wins'=>0, 'losses'=>0, 'draws'=>0}
