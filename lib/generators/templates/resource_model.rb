@@ -83,11 +83,11 @@
   end
 
   def probability(expectation)
-    result       = (@expectation == true) ? 'wins' : nil
-    result       ||= (@expectation == false) ? 'losses' : 'draws'
+    result       = (expectation == true) ? 'wins' : nil
+    result       ||= (expectation == false) ? 'losses' : 'draws'
 
-    exp_result   = (@expectation == true) ? :we : nil
-    exp_result   ||= (@expectation == false) ? :le : :de
+    exp_result   = (expectation == true) ? :we : nil
+    exp_result   ||= (expectation == false) ? :le : :de
 
     w = self.wins   * 100.0 / ((matches == 0) ? 1 : matches)
     l = self.losses * 100.0 / ((matches == 0) ? 1 : matches)
@@ -110,6 +110,5 @@
 
     all_probabilities = expectations[result][:we]+expectations[result][:le]+expectations[result][:de]
     probability       = expectations[result][exp_result] / ((all_probabilities == 0) ? 1 : all_probabilities)
-
     (probability == 0) ? 0.25 : probability
   end
