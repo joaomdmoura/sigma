@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "model updater" do
+describe "resources specs" do
   let(:user_1) { create :user }
   let(:user_2) { create :user }
   let(:user_3) { create :user }
