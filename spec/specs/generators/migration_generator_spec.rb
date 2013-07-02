@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "migration generator" do
   let(:user) { create :user }
   let(:scale) { 50.0 }
+  let(:default_expectations) {{'wins'=>0, 'losses'=>0, 'draws'=>0}}
   
   context "check if the migrations updated user table" do
     it "have the skill field and the default value" do
@@ -27,9 +28,9 @@ describe "migration generator" do
 
     it "have a serialized expectations x result field" do
       expect(user.expectations).to_not be_nil
-      expect(user.expectations['win_expectation']).to_not be_nil
-      expect(user.expectations['lost_expectation']).to_not be_nil
-      expect(user.expectations['draw_expectation']).to_not be_nil
+      expect(user.expectations['win_expectation']).to eq default_expectations
+      expect(user.expectations['lost_expectation']).to eq default_expectations
+      expect(user.expectations['draw_expectation']).to eq default_expectations
     end
   end
 end
