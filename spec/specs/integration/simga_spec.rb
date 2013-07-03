@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe "sgima specs" do
+describe "sigma specs" do
 
 end
